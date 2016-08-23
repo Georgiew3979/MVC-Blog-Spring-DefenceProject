@@ -42,7 +42,7 @@ public class HomeController {
         }
 
         model.addAttribute("post", post);
-        return "posts/index";
+        return "posts/viewPost";
     }
 
 }

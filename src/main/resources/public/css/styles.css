@@ -80,3 +80,8 @@ ul#messages li.error {
     font-size: 0.9em;
 }
 
+
+table th, table td {
+    background: #DDD;
+    padding: 5px;
+}

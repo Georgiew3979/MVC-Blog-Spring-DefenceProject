@@ -1,24 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="layout :: site-head">
-    <title th:text="${post.title}">MVC Blog</title>
+    <title>MVC Blog - All Post</title>
 </head>
 
 <body>
 <header th:replace="layout :: site-header" />
 
 <main id="posts">
+    <h2>All Posts:</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Post content</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Action</th>
 
-        <h2 class="title" th:text="${post.title}">Post Title</h2>
-        <div class="date">
-            <i>Posted on</i>
-            <span th:text="${#dates.format(post.date, 'dd-MM-yyyy')}">22-May-2016</span>
-            <span th:if="${post.author}" th:remove="tag">
-                    <i>by</i> <span th:text="${post.author.fullName != null ?
-                        post.author.fullName : post.author.username}">Svetlin Nakov</span>
-                </span>
-        </div>
-        <p class="content" th:utext="${post.body}">Post content</p>
+        </tr>
+
+        <tr  th:each="p : ${posts}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.title}"></td>
+            <td th:text="${p.body}"></td>
+            <td th:text="${p.author.fullName != null ? p.author.fullName : p.author.username}"></td>
+            <td th:text="${#dates.format(p.date, 'dd-MM-yyyy')}"></td>
+            <td>
+                <a href="posts/edit.html" th:href="@{/posts/edit/{id}/(id=${p.id})}">Edit</a>
+                <a href="posts/delete.html" th:href="@{/posts/delete/{id}/(id=${p.id})}">Delete</a>
+
+            </td>
+        </tr>
+
+    </table>
 
 </main>
 

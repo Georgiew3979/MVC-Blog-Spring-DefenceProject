@@ -4,6 +4,8 @@ import blog.models.User;
 import blog.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,7 @@ public class UserServiceJpaIml implements UserService {
     @Override
     public User create(User user) {
         // todo encrypt the password here
+
         return this.userRepository.save(user);
     }
 
@@ -41,11 +44,20 @@ public class UserServiceJpaIml implements UserService {
 
     @Override
     public boolean authenticate(String username, String password) {
-        return false;
+        return true;
     }
 
     @Override
     public User login(String username, String password) {
+       // BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+       // String hashedPassword = passwordEncoder.encode(password);
+
+        User user = this.userRepository.findByUsername(username);
+
+        if(user != null && password.equals(user.getPasswordHash())) {
+            return user;
+        }
+
         return null;
     }
 
