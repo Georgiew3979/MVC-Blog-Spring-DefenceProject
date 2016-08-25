@@ -1,6 +1,9 @@
 package blog.controllers;
 
 import blog.forms.LoginForm;
+import blog.forms.RegisterForm;
+import blog.models.User;
+import blog.repositories.UserRepository;
 import blog.services.NotificationService;
 import blog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,4 +52,45 @@ public class AccountController {
 
     }
 
+    @RequestMapping("/users/register")
+    public String showRegisterForm(RegisterForm registerForm){
+        return "users/register";
+    }
+
+    @RequestMapping(value = "/users/register", method = RequestMethod.POST)
+    public String showRegisterForm(@Valid RegisterForm registerForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+
+            notificationService.addErrorMessage("Please fill all fields");
+            return "users/register";
+        }
+
+        String currentUsername = registerForm.getUsername();
+
+        if(userService.isUserExist(currentUsername)) {
+            notificationService.addErrorMessage("This username was rezeved.Please choose another username ");
+            return "users/register";
+        }
+
+
+        if(!registerForm.getPassword().equals(registerForm.getPasswordConfirm())){
+            notificationService.addErrorMessage("The password and confirm password are not equal ");
+            return "users/register";
+        }
+        //// TODO: 24/08/2016  validation email
+        User newUser = userService.register(registerForm.getUsername(),
+                                                registerForm.getPassword(),
+                                                registerForm.getFullName(),
+                                                registerForm.getEmail());
+        userService.create(newUser);
+        if ( newUser.getId() > 0) {
+            notificationService.addInfoMessage("Follow next step");
+            return "redirect:/users/login";
+        } else {
+            notificationService.addErrorMessage("There is a problem with DB, please try again!");
+            return "users/register";
+        }
+
+
+    }
 }

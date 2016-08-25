@@ -23,6 +23,17 @@ public class User {
     @OneToMany(mappedBy = "author")
     private Set<Post> posts = new HashSet<Post>();
 
+    @Column(nullable = false, length = 30, unique = true)
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Long getId() {
         return id;
     }
@@ -75,6 +86,13 @@ public class User {
         this.id = id;
         this.username = username;
         this.fullName = fullName;
+    }
+
+    public User(String username, String passwordHash, String fullName, String email) {
+        this.username = username;
+        this.passwordHash = passwordHash;
+        this.fullName = fullName;
+        this.email = email;
     }
 
     @Override
