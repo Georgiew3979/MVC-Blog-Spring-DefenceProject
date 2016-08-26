@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="layout :: site-head">
+    <title>MVC Blog - Edit User</title>
+</head>
+
+<body>
+<header th:replace="layout :: site-header" />
+
+<main id="users">
+    <h2>Edit User:</h2>
+    <form method="post" th:object="${registerForm}">
+    <table>
+        <tr>
+            <th>Field name</th>
+            <th>Content</th>
+
+        </tr>
+
+        <tr>
+            <td>ID</td>
+            <td><input type="text"   id="id" name="id" th:value="${user.id}" /></td>
+        </tr>
+
+        <tr>
+            <td>Username</td>
+            <td><input type="text" id="username" name="username"  th:value="${user.username}" /></td>
+        </tr>
+        <tr>
+            <td>Full Name</td>
+            <td><input  id="fullName" name="fullName" th:value="${user.fullName}"/></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="text" id="email" name="email" th:value="${user.email}"/></td>
+        </tr>
+        <tr>
+            <td>Roles</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>Confirm:</td>
+         <td>
+             <input type="submit" value="Edit" />
+
+         </td>
+        </tr>
+
+    </table>
+        </form>
+
+</main>
+
+<footer th:replace="layout :: site-footer" />
+</body>
+
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="layout :: site-head">
+    <title>MVC Blog - All User</title>
+</head>
+
+<body>
+<header th:replace="layout :: site-header" />
+
+<main id="users">
+    <h2>All Users:</h2>
+    <form method="post">
+    <table>
+        <tr>
+            <th>Field name</th>
+            <th>Content</th>
+
+        </tr>
+
+        <tr>
+            <td>ID</td>
+            <td th:text="${user.id}"></td>
+            <input type="hidden" name="id" th:value="${user.id}" />
+        </tr>
+
+        <tr>
+            <td>Username</td>
+            <td th:text="${user.username}"></td>
+        </tr>
+        <tr>
+            <td>Full Name</td>
+            <td th:text="${user.fullName}"></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td th:text="${user.email}"></td>
+        </tr>
+        <tr>
+            <td>Roles</td>
+            <td> TODO </td>
+        </tr>
+
+        <tr>
+            <td>Confirm:</td>
+         <td>
+             <input type="submit" value="Delete" />
+
+         </td>
+        </tr>
+
+    </table>
+        </form>
+
+</main>
+
+<footer th:replace="layout :: site-footer" />
+</body>
+
+
+</html>
