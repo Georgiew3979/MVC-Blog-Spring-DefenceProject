@@ -41,6 +41,12 @@ public class PostServiceJpaImpl implements PostService {
     }
 
     @Override
+    public Post register(String title, String body) {
+        Post post = new Post(title, body);
+        return post;
+    }
+
+    @Override
     public void deleteById(Long id) {
             this.postRepository.delete(id);
     }

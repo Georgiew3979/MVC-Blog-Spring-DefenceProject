@@ -9,6 +9,7 @@
 
 <main id="posts">
     <h2>Edit Post:</h2>
+    <form method="post" th:object="${postForm}">
     <table>
         <tr>
             <th>Field name</th>
@@ -18,23 +19,23 @@
 
         <tr>
             <td>ID</td>
-            <td th:text="${post.id}"></td>
+            <td><input type="text"   id="id" name="id" th:value="${post.id}" /></td>
         </tr>
 
         <tr>
             <td>Title</td>
-            <td><input type="text" id="title" name="title"  th:value="${post.title}"/></td>
+            <td><input type="text" id="title" name="title"  th:value="${post.title}" /></td>
         </tr>
         <tr>
             <td>Content</td>
-            <td><textarea cols="50" rows="15"  id="body" name="body" th:text="${post.body}"></textarea></td>
+            <td><input cols="50" rows="15"  id="body" name="body" th:value="${post.body}"/></td>
         </tr>
         <tr>
         <td colspan="2" align="center">Author</td>
         </tr>
         <tr>
             <td th:text="${post.author.fullName != null ? post.author.fullName : post.author.username}"></td>
-            <td><input type="text" id="authorId" name="authorId" th:value="${post.author.id}"/></td>
+            <td><input type="text" id="author" name="author" th:value="${post.author.id}"/></td>
         </tr>
         <tr>
             <td>Date</td>
@@ -50,6 +51,7 @@
         </tr>
 
     </table>
+        </form>
 
 </main>
 

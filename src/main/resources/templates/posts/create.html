@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="layout :: site-head">
-    <title>MVC Blog - All Post</title>
+    <title>MVC Blog - Create Post</title>
 </head>
 
 <body>
 <header th:replace="layout :: site-header" />
 
 <main id="posts">
-    <h2>All Posts:</h2>
-    <form method="post">
+    <h2>Create Post:</h2>
+    <form method="post" th:object="${postForm}">
     <table>
         <tr>
             <th>Field name</th>
@@ -17,39 +17,35 @@
 
         </tr>
 
-        <tr>
-            <td>ID</td>
-            <td th:text="${post.id}"></td>
-            <input type="hidden" name="id" th:value="${post.id}" />
-        </tr>
 
         <tr>
             <td>Title</td>
-            <td th:text="${post.title}"></td>
+            <td><input type="text" id="title" name="title" th:value="*{title}"/></td>
         </tr>
         <tr>
             <td>Content</td>
-            <td th:text="${post.body}"></td>
+            <td><textarea cols="50" rows="15"  id="body" name="body" th:value="*{body}"></textarea></td>
         </tr>
+
         <tr>
             <td>Author</td>
-            <td th:text="${post.author.fullName != null ? post.author.fullName : post.author.username}"></td>
+            <td><input type="text" id="author" name="author" th:value="*{author}"/></td>
         </tr>
         <tr>
             <td>Date</td>
-            <td th:text="${#dates.format(post.date, 'dd-MM-yyyy')}"></td>
+            <td><input type="text" id="date" name="date" th:value="*{date}"/></td>
         </tr>
 
         <tr>
             <td>Confirm:</td>
          <td>
-             <input type="submit" value="Delete" />
+             <input type="submit" value="Create" />
 
          </td>
         </tr>
 
     </table>
-        </form>
+    </form>
 
 </main>
 

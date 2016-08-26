@@ -37,10 +37,6 @@ public class AccountController {
             return "users/login";
         }
 
-        //if (userService.authenticate(loginForm.getUsername(),loginForm.getPassword())) {
-        //   notificationService.addInfoMessage("Follow next step");
-        //    return  "redirect:/";
-        //}
         if (userService.login(loginForm.getUsername(), loginForm.getPassword()) != null) {
             notificationService.addInfoMessage("Follow next step");
             return "redirect:/";
