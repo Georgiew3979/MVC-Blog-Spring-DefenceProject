@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="layout :: site-head">
+    <title th:text="${post.title}">MVC Blog</title>
+</head>
+<body>
+<header th:replace="layout :: site-header" />
+
+<aside>
+    <h2>Recent Posts</h2>
+    <a href="#" th:each="p : ${latest5posts}" th:text="${p.title}"
+       th:href="@{/posts/{id}/(id=${p.id})}">Work Begins on HTML5.1</a>
+</aside>
+
+
+
+<main id="posts">
+
+        <h2 class="title" th:text="${post.title}">Post Title</h2>
+        <div class="date">
+            <i>Posted on</i>
+            <span th:text="${#dates.format(post.date, 'dd-MM-yyyy')}">22-May-2016</span>
+            <span th:if="${post.author}" th:remove="tag">
+                    <i>by</i> <span th:text="${post.author.fullName != null ?
+                        post.author.fullName : post.author.username}">Svetlin Nakov</span>
+                </span>
+        </div>
+        <p class="content" th:utext="${post.body}">Post content</p>
+    <a href="posts/viewPostAndCommentAdd.html" th:href="@{/posts/comment/{id}/(id=${post.id})}">Add comment</a>
+</main>
+
+<main id="comments">
+
+    <h3 class="titleComment">Comment:</h3>
+    <div class="date" th:each="c : ${comments}">
+        <i>Commented on</i>
+        <span th:text="${#dates.format(c.date, 'dd-MM-yyyy')}">22-May-2016</span>
+        <span th:if="${c.author}" th:remove="tag">
+                    <i>by</i> <span th:text="${c.author.fullName != null ?
+                        c.author.fullName : c.author.username}">Svetlin Nakov</span>
+                </span>
+        <i class="content" th:utext="${c.content}">Post content</i>
+        <hr/>
+
+
+    </div>
+
+</main>
+
+<footer th:replace="layout :: site-footer" />
+</body>
+
+
+</html>

@@ -1,8 +1,11 @@
 package blog.controllers;
 
+import blog.forms.CommentForm;
 import blog.forms.PostForm;
+import blog.models.Comment;
 import blog.models.Post;
 import blog.models.User;
+import blog.services.CommentService;
 import blog.services.NotificationService;
 import blog.services.PostService;
 import blog.services.UserService;
@@ -25,6 +28,8 @@ public class PostController {
     private PostService postService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommentService commentService;
 
     @Autowired
     private NotificationService notificationService;
@@ -59,7 +64,7 @@ public class PostController {
         Post post = postService.findById(id);
         if(post == null) {
             notificationService.addErrorMessage("Cannot find  pos:" + id);
-            return "redirect:posts/index";
+            return "redirect:/posts";
         }
 
         model.addAttribute("post", post);
@@ -71,9 +76,15 @@ public class PostController {
         Post post = postService.findById(id);
         if(post == null) {
             notificationService.addErrorMessage("Cannot find  pos:" + id);
-            return "redirect:posts/index";
+            return "redirect:/posts";
         }
-
+        // delete comment first
+        List<Comment> comments = commentService.findAllByPostId(id);
+        if (!comments.isEmpty()) {
+            for (Comment comment : comments) {
+                commentService.deleteById(comment.getId());
+            }
+        }
         postService.deleteById(id);
         if(postService.findById(id) == null) {
             notificationService.addInfoMessage("The post was deleted");
@@ -89,7 +100,7 @@ public class PostController {
         Post post = postService.findById(id);
         if(post == null) {
             notificationService.addErrorMessage("Cannot find  pos:" + id);
-            return "redirect:posts/index";
+            return "redirect:/posts";
         }
 
         model.addAttribute("post", post);
@@ -142,5 +153,45 @@ public class PostController {
             notificationService.addErrorMessage("There is a problem with DB, please try again!");
             return "posts/create";
         }
+    }
+
+    @RequestMapping("/posts/comment/{id}")
+    public String showPostWithComment(CommentForm commentForm, @PathVariable("id") Long id,  Model model) {
+        Post post = postService.findById(id);
+        if(post == null) {
+            notificationService.addErrorMessage("Cannot find  pos:" + id);
+            return "redirect:/";
+        }
+        List<Comment> comments = commentService.findAllByPostId(id);
+        model.addAttribute("comments", comments);
+        model.addAttribute("post", post);
+        return "posts/viewPostAndCommentAdd";
+    }
+
+
+    @RequestMapping(value = "/posts/comment/{id}", method = RequestMethod.POST)
+    public String publishComment(@PathVariable("id") Long id, @Valid CommentForm commentForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            notificationService.addErrorMessage("Please write comment or choose Back link");
+            return "redirect:/posts/comment/{id}";
+        }
+        Comment comment = new Comment();
+        comment.setContent(commentForm.getContent());
+        Date date = new Date();
+        comment.setDate(date);
+
+        Post post = postService.findById(id);
+        comment.setPost(post);
+
+
+        User author = userService.findById(commentForm.getAuthor());
+        comment.setAuthor(author);
+
+
+        commentService.create(comment);
+
+        notificationService.addInfoMessage("Comment added, Follow next step");
+        return "redirect:/posts/{id}";
+
     }
 }

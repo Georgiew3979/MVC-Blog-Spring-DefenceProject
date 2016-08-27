@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="layout :: site-head">
+    <title th:text="${post.title}">MVC Blog</title>
+</head>
+<body>
+<header th:replace="layout :: site-header" />
+
+
+
+<main id="posts">
+
+        <h2 class="title" th:text="${post.title}">Post Title</h2>
+        <div class="date">
+            <i>Posted on</i>
+            <span th:text="${#dates.format(post.date, 'dd-MM-yyyy')}">22-May-2016</span>
+            <span th:if="${post.author}" th:remove="tag">
+                    <i>by</i> <span th:text="${post.author.fullName != null ?
+                        post.author.fullName : post.author.username}">Svetlin Nakov</span>
+                </span>
+        </div>
+        <p class="content" th:utext="${post.body}">Post content</p>
+
+</main>
+
+<main id="comments">
+
+    <h3 class="titleComment">Comment:</h3>
+    <div class="date" th:each="c : ${comments}">
+        <i>Commented on</i>
+        <span th:text="${#dates.format(c.date, 'dd-MM-yyyy')}">22-May-2016</span>
+        <span th:if="${c.author}" th:remove="tag">
+                    <i>by</i> <span th:text="${c.author.fullName != null ?
+                        c.author.fullName : c.author.username}">Svetlin Nakov</span>
+                </span>
+        <i class="content" th:utext="${c.content}">Post content</i>
+    </div>
+
+    <form method="post" th:object="${commentForm}">
+        <label for="content"> Enter your comment here:</label>
+        <td><input type="text" id="content" name="content" size="50" th:value="*{content}"/></td>
+        <span class="formError" th:if="${#fields.hasErrors('content')}"
+              th:errors="*{content}">Invalid content</span>
+        <input type="hidden" name="author" th:value="3" />
+        <input type="submit" value="Publish comment" />
+
+    </form>
+    <a href="viewPost.html" th:href="@{/posts/{id}/(id=${post.id})}">Back to Resent Post</a>
+
+</main>
+
+<footer th:replace="layout :: site-footer" />
+</body>
+
+
+</html>
