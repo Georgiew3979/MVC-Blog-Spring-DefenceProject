@@ -93,6 +93,8 @@ public class AccountController {
                                                 registerForm.getPassword(),
                                                 registerForm.getFullName(),
                                                 registerForm.getEmail());
+        //TODO set Roles
+        newUser.setRoles(2);
         userService.create(newUser);
         if ( newUser.getId() > 0) {
             notificationService.addInfoMessage("Follow next step");

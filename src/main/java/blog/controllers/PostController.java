@@ -191,7 +191,7 @@ public class PostController {
         commentService.create(comment);
 
         notificationService.addInfoMessage("Comment added, Follow next step");
-        return "redirect:/posts/{id}";
+        return "redirect:/share/{id}";
 
     }
 }

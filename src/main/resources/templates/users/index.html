@@ -25,7 +25,7 @@
             <td th:text="${u.username}"></td>
             <td th:text="${u.fullName}"></td>
             <td th:text="${u.email}"></td>
-            <td> todo</td>
+            <td th:text="${u.roles}"></td>
             <td>
                 <a href="posts/edit.html" th:href="@{/users/edit/{id}/(id=${u.id})}">Edit</a>
                 <a href="posts/delete.html" th:href="@{/users/delete/{id}/(id=${u.id})}">Delete</a>

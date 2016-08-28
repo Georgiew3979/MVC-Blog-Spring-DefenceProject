@@ -83,8 +83,8 @@ public class UserServiceJpaImpl implements UserService {
     }
 
     @Override
-    public String findByUsernameAsString(String username) {
-        return null;
+    public User findByUsername(String username) {
+        return this.userRepository.findByUsername(username);
     }
 
     @Override

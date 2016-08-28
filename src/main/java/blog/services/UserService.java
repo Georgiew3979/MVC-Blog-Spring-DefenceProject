@@ -15,7 +15,7 @@ public interface UserService {
     User login(String username, String password);
     User register(String username, String password, String fullName, String email);
     void setPassword(String username, String newPassword);
-    String findByUsernameAsString(String username);
+    User findByUsername(String username);
     boolean isUserExist(String username);
 
 }

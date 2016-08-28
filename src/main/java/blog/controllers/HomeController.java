@@ -36,7 +36,33 @@ public class HomeController {
 
     }
 
-    @RequestMapping("/posts/{id}")
+    @RequestMapping("/viewAllPosts")
+    public String viewAll(Model model) {
+        List<Post> allPosts = postService.findAll();
+        model.addAttribute("allposts", allPosts);
+
+        return "/share/viewAllPosts";
+
+    }
+
+    @RequestMapping("/viewNext")
+    public String viewNext(Model model) {
+        List<Post> allPosts = postService.findAll();
+        int page = 1;
+       if(allPosts.size()/5 < page) {
+           page += 1;
+       } else { page = 0;}
+
+        List<Post> nextPosts = postService.findNext5(page,5);
+        model.addAttribute("allposts", nextPosts);
+
+        model.addAttribute("page", page);
+        return "/share/viewAllPosts";
+
+    }
+
+
+    @RequestMapping("/share/{id}")
     public String view(@PathVariable("id") Long id, Model model) {
 
         List<Post> latest5Posts = postService.findLatest5();
@@ -51,7 +77,7 @@ public class HomeController {
         List<Comment> comments = commentService.findAllByPostId(id);
         model.addAttribute("comments", comments);
         model.addAttribute("post", post);
-        return "viewPost";
+        return "/share/viewPost";
     }
 
 }

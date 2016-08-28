@@ -20,11 +20,22 @@ public class User {
     @Column(length = 100)
     private String fullName;
 
+    @Column(length = 11)
+    private int roles;
+
     @OneToMany(mappedBy = "author")
     private Set<Post> posts = new HashSet<Post>();
 
     @Column(nullable = false, length = 30, unique = true)
     private String email;
+
+    public int getRoles() {
+        return roles;
+    }
+
+    public void setRoles(int roles) {
+        this.roles = roles;
+    }
 
     public String getEmail() {
         return email;
@@ -92,6 +103,14 @@ public class User {
         this.username = username;
         this.passwordHash = passwordHash;
         this.fullName = fullName;
+        this.email = email;
+    }
+
+    public User(String username, String passwordHash, String fullName, int roles, String email) {
+        this.username = username;
+        this.passwordHash = passwordHash;
+        this.fullName = fullName;
+        this.roles = roles;
         this.email = email;
     }
 

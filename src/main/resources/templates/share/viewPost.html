@@ -6,6 +6,13 @@
 <body>
 <header th:replace="layout :: site-header" />
 
+<aside>
+    <h2>Recent Posts</h2>
+    <a href="#" th:each="p : ${latest5posts}" th:text="${p.title}"
+       th:href="@{/share/{id}/(id=${p.id})}">Work Begins on HTML5.1</a>
+    <br/>
+    <h2>Search by name</h2>
+</aside>
 
 
 <main id="posts">
@@ -20,7 +27,7 @@
                 </span>
         </div>
         <p class="content" th:utext="${post.body}">Post content</p>
-
+    <a href="../posts/viewPostAndCommentAdd.html" th:href="@{/posts/comment/{id}/(id=${post.id})}">Add comment</a>
 </main>
 
 <main id="comments">
@@ -34,21 +41,10 @@
                         c.author.fullName : c.author.username}">Svetlin Nakov</span>
                 </span>
         <i class="content" th:utext="${c.content}">Post content</i>
+        <hr/>
+
+
     </div>
-
-    <form method="post" th:object="${commentForm}">
-        <label for="content"> Enter your comment here:</label>
-        <td><input type="text" id="content" name="content" size="50" th:value="*{content}"/></td>
-        <span class="formError" th:if="${#fields.hasErrors('content')}"
-              th:errors="*{content}">Invalid content</span>
-        <input type="hidden" name="author" th:value="3" />
-        <input type="submit" value="Publish comment" />
-        <input type="hidden"
-               th:name="${_csrf.parameterName}"
-               th:value="${_csrf.token}" />
-
-    </form>
-    <a href="viewPost.html" th:href="@{/share/{id}/(id=${post.id})}">Back to Resent Post</a>
 
 </main>
 
