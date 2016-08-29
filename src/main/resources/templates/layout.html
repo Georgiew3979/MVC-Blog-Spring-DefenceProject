@@ -15,18 +15,21 @@
 <header th:fragment="site-header" th:remove="tag">
     <header>
 
-
-                <a href="index.html" th:href="@{/}"><img
-                        src="../public/img/site-logo.png" th:src="@{/img/site-logo.png}" /></a>
-                <a href="index.html" th:href="@{/}">Home</a>
+            <a href="index.html" th:href="@{/}"><img
+                    src="../public/img/site-logo.png" th:src="@{/img/site-logo.png}" /></a>
+            <a href="index.html" th:href="@{/}">Home</a>
+            <span th:if="${#httpServletRequest.remoteUser == null || #httpServletRequest.remoteUser == 'admin' }">
                 <a href="users/login.html" th:href="@{/users/login}">Login</a>
                 <a href="users/register.html" th:href="@{/users/register}">Register</a>
-
-
+            </span>
+            <span th:if="${#httpServletRequest.remoteUser != null}">
                 <a href="posts/create.html" th:href="@{/posts/create}">Create Post</a>
 
                 <a href="posts/index.html" th:href="@{/posts}">Posts</a>
-                <a href="users/login.html" th:href="@{/users}">Users</a>
+                 <span th:if="${#httpServletRequest.remoteUser == 'admin'}">
+                    <a href="users/login.html" th:href="@{/users}">Users</a>
+                 </span>
+            </span>
 
             <span id="logged-in-info">
                 <p th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]! </p>

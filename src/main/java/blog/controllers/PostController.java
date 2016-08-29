@@ -116,8 +116,11 @@ public class PostController {
         Post post = postService.findById(id);
         post.setTitle(postForm.getTitle());
         post.setBody(postForm.getBody());
-        User author = userService.findById(postForm.getAuthor());
+
+
+        User author = userService.findByUsername(postForm.getAuthorName());
         post.setAuthor(author);
+
         Date date = new Date();
         post.setDate(date);
 
@@ -141,10 +144,10 @@ public class PostController {
         }
         Post newPost = postService.register(postForm.getTitle(),
                                             postForm.getBody());
-        User author = userService.findById(postForm.getAuthor());
+        User author = userService.findByUsername(postForm.getAuthorName());
         newPost.setAuthor(author);
-        Date date = new Date();
-        newPost.setDate(date);
+
+        newPost.setDate(postForm.getDate());
         postService.create(newPost);
         if ( newPost.getId() > 0) {
             notificationService.addInfoMessage("Post created, Follow next step");
@@ -184,7 +187,8 @@ public class PostController {
         comment.setPost(post);
 
 
-        User author = userService.findById(commentForm.getAuthor());
+
+        User author = userService.findByUsername(commentForm.getAuthorName());
         comment.setAuthor(author);
 
 

@@ -2,9 +2,13 @@ package blog.controllers;
 
 import blog.forms.LoginForm;
 import blog.forms.RegisterForm;
+import blog.models.Comment;
+import blog.models.Post;
 import blog.models.User;
 import blog.repositories.UserRepository;
+import blog.services.CommentService;
 import blog.services.NotificationService;
+import blog.services.PostService;
 import blog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +30,12 @@ public class AccountController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PostService postService;
+
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping("/users")
     public String viewAllUsers(Model model) {
@@ -126,6 +136,23 @@ public class AccountController {
         if(user == null) {
             notificationService.addErrorMessage("Cannot find  user:" + id);
             return "redirect:users/index";
+        }
+        // delete comment for posts created by user
+        List<Comment> comments = commentService.findAllByAuthorId(id);
+        if (!comments.isEmpty()) {
+            for (Comment comment : comments) {
+                commentService.deleteById(comment.getId());
+            }
+        }
+
+        //delete posts from user
+        List<Post> posts = postService.findAll();
+        if (!posts.isEmpty()) {
+            for (Post post : posts) {
+                if(post.getAuthor().getId() == id) {
+                    postService.deleteById(post.getId());
+                }
+            }
         }
 
         userService.deleteById(id);

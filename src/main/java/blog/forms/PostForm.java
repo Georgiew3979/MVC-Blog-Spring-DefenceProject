@@ -20,8 +20,35 @@ public class PostForm {
 
     private Long author;
 
+    private String authorName;
 
-    private String date;
+    private String dateNew;
+
+    private Date date =  new Date();
+
+    public String getDateNew() {
+        return dateNew;
+    }
+
+    public void setDateNew(String dateNew) {
+        this.dateNew = dateNew;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Long getId() {
         return id;
@@ -55,20 +82,28 @@ public class PostForm {
         this.author = author;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     public PostForm() {
     }
 
-    public PostForm(String title, String body, Long author, String date) {
+    public PostForm(String title, String body, String authorName, String dateNew) {
         this.title = title;
         this.body = body;
+        this.authorName = authorName;
+        this.dateNew = dateNew;
+    }
+
+    public PostForm(String title, String body, String authorName, Date date) {
+        this.title = title;
+        this.body = body;
+        this.authorName = authorName;
+        this.date = date;
+    }
+
+    public PostForm(String title, String body, Long author, Date date) {
+        this.title = title;
+        this.body = body;
+        this.author = author;
         this.date = date;
     }
 

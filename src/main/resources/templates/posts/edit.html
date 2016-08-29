@@ -19,7 +19,8 @@
 
         <tr>
             <td>ID</td>
-            <td><input type="text"   id="id" name="id" th:value="${post.id}" /></td>
+            <td><input type="text"   disabled="disabled" th:value="${post.id}" /></td>
+            <input type="hidden"   id="id" name="id" th:value="${post.id}" />
         </tr>
 
         <tr>
@@ -28,18 +29,21 @@
         </tr>
         <tr>
             <td>Content</td>
-            <td><input size="100"   id="body" name="body" th:value="${post.body}"/></td>
+            <td><textarea cols="50" rows="15"  id="body" name="body" th:text="${post.body}"></textarea></td>
+
         </tr>
         <tr>
         <td colspan="2" align="center">Author</td>
         </tr>
         <tr>
             <td th:text="${post.author.fullName != null ? post.author.fullName : post.author.username}"></td>
-            <td><input type="text" id="author" name="author" th:value="${post.author.id}"/></td>
+            <input type="hidden" id="authorName" name="authorName" th:value="${#httpServletRequest.remoteUser}"  />
+            <td><input type="text" disabled="disabled" name="authorName" th:value="${#httpServletRequest.remoteUser}"  /></td>
         </tr>
         <tr>
             <td>Date</td>
-            <td><input type="text" id="date" name="date" th:value="${post.date}"/></td>
+            <td><input type="text" disabled="disabled" name="dateNew"  th:value="${post.date}" /></td>
+            <input type="hidden" id="dateNew" name="dateNew"  th:value="${post.date}" />
         </tr>
 
         <tr>

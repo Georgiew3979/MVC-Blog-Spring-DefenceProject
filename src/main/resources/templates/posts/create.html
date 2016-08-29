@@ -29,11 +29,12 @@
 
         <tr>
             <td>Author</td>
-            <td><input type="text" id="author" name="author" th:value="*{author}"/></td>
+            <td><input type="text"  name="authorName"  disabled="disabled" th:value="${#httpServletRequest.remoteUser}"  /></td>
+            <td><input type="hidden"  name="authorName" id="authorName" th:value="${#httpServletRequest.remoteUser}"  /></td>
         </tr>
         <tr>
             <td>Date</td>
-            <td><input type="text" id="date" name="date" th:value="*{date}"/></td>
+            <td th:text="*{date}"></td>
         </tr>
 
         <tr>

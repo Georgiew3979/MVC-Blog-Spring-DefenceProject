@@ -27,9 +27,10 @@
             <td th:text="${p.author.fullName != null ? p.author.fullName : p.author.username}"></td>
             <td th:text="${#dates.format(p.date, 'dd-MM-yyyy')}"></td>
             <td>
-                <a href="posts/edit.html" th:href="@{/posts/edit/{id}/(id=${p.id})}">Edit</a>
-                <a href="posts/delete.html" th:href="@{/posts/delete/{id}/(id=${p.id})}">Delete</a>
-
+                  <span th:if="${#httpServletRequest.remoteUser == p.author.username || #httpServletRequest.remoteUser == 'admin' }">
+                        <a href="posts/edit.html" th:href="@{/posts/edit/{id}/(id=${p.id})}">Edit</a>
+                        <a href="posts/delete.html" th:href="@{/posts/delete/{id}/(id=${p.id})}">Delete</a>
+                </span>
             </td>
         </tr>
 
