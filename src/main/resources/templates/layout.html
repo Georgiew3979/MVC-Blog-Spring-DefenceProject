@@ -31,7 +31,7 @@
                  </span>
             </span>
 
-            <span id="logged-in-info">
+            <span id="logged-in-info" th:if="${#httpServletRequest.remoteUser != null}">
                 <p th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]! </p>
                 <form  th:action="@{/logout}" method="post">
                     <input  type="submit" value="Sign Out"/>
@@ -56,7 +56,7 @@
 <p>Welcome to the Spring MVC Blog.</p>
 
 <footer th:fragment="site-footer">
-    &copy; Spring MVC Blog System, 2016
+    &copy; Spring MVC System and &copy; DG, 2016
 </footer>
 </body>
 

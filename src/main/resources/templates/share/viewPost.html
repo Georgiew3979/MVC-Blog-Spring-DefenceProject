@@ -20,7 +20,7 @@
         </div>
         <p class="content" th:utext="${post.body}">Post content</p>
     <a href="../posts/viewPostAndCommentAdd.html" th:href="@{/posts/comment/{id}/(id=${post.id})}">Add comment</a>
-    <a href="#" th:href="@{/share/viewNext/{page}/(page=${page})}">Back</a>
+    <a href="#" th:href="@{/share/viewBack/{page}/(page=${page})}">Back</a>
 </main>
 
 <main id="comments">

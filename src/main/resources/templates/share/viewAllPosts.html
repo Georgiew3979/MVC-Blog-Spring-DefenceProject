@@ -8,7 +8,7 @@
 <header th:replace="layout :: site-header" />
 
 <aside>
-    <h2>Current 5 Posts</h2>
+    <h2>Current Posts</h2>
     <a href="#" th:each="p : ${nextposts}" th:text="${p.title}"
        th:href="@{/share/{id}/(id=${p.id})}">Work Begins on HTML5.1</a>
     <br/>

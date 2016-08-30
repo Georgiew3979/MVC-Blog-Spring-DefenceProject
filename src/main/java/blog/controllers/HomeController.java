@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
-
+    public static Integer CURRENT_PAGE = 0;
 
 
     @Autowired
@@ -54,14 +54,29 @@ public class HomeController {
        if( allPosts.size()/5 > page) {
            page += 1;
        } else { page = 0;}
-
+        CURRENT_PAGE = page;
         List<Post> nextPosts = postService.findNext5(page,5);
         for (Post post: nextPosts) {
             post.setBody(cutLongTextDouble(post.getBody()));
         }
         model.addAttribute("nextposts", nextPosts);
 
-        model.addAttribute("page", page);
+        model.addAttribute("page", CURRENT_PAGE);
+        return "/share/viewAllPosts";
+
+    }
+
+    @RequestMapping("/share/viewBack/{page}")
+    public String viewBack(@PathVariable("page") Integer page,Model model) {
+
+        List<Post> nextPosts = postService.findNext5(page,5);
+        for (Post post: nextPosts) {
+            post.setBody(cutLongTextDouble(post.getBody()));
+        }
+
+
+        model.addAttribute("nextposts", nextPosts);
+        model.addAttribute("page", CURRENT_PAGE);
         return "/share/viewAllPosts";
 
     }
@@ -92,8 +107,9 @@ public class HomeController {
         List<Comment> comments = commentService.findAllByPostId(id);
         model.addAttribute("comments", comments);
         model.addAttribute("post", post);
-        model.addAttribute("page", 1);
+        model.addAttribute("page", CURRENT_PAGE);
         return "/share/viewPost";
     }
+
 
 }

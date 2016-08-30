@@ -17,9 +17,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
+
 import javax.validation.Valid;
+import javax.validation.constraints.AssertFalse;
+import java.util.Collections;
 import java.util.List;
 import java.util.Date;
+
+import static java.util.Collections.reverse;
 
 
 @Controller
@@ -42,9 +48,11 @@ public class PostController {
             notificationService.addErrorMessage("Cannot find any post");
             return "redirect:/";
         }
+
         for (Post post: posts) {
             post.setBody(cutLongText(post.getBody()));
         }
+        Collections.reverse(posts);
         model.addAttribute("posts", posts);
         return "posts/index";
     }
