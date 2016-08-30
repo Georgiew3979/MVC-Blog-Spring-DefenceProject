@@ -8,10 +8,17 @@
 <header th:replace="layout :: site-header" />
 
 <aside>
+    <h2>Current 5 Posts</h2>
+    <a href="#" th:each="p : ${nextposts}" th:text="${p.title}"
+       th:href="@{/share/{id}/(id=${p.id})}">Work Begins on HTML5.1</a>
     <br/>
-    <a href="#" th:href="@{viewNext}">Show next 5 posts</a><br/>
+    <hr/>
+    <a href="#" th:href="@{/share/viewNext/{page}/(page=${page})}">Show next 5 posts</a><br/>
+    <hr/>
+
+
     <h2>Search by name</h2>
-    <a href="viewPost.html" th:href="@{/viewAllPost}">TODO</a><br/>
+    <a href="viewPost.html" th:href="@{/share/viewAllPost}">TODO</a><br/>
 </aside>
 
 <main id="posts">
@@ -19,7 +26,7 @@
 
 
 
-    <article th:each="p : ${allposts}">
+    <article th:each="p : ${nextposts}">
         <h2 class="title" th:text="${p.title}">Post Title</h2>
         <div class="date">
             <i>Posted on</i>
@@ -30,6 +37,7 @@
                 </span>
         </div>
         <p class="content" th:utext="${p.body}">Post content</p>
+        <a href="#" th:href="@{/share/{id}/(id=${p.id})}">See more ...</a>
     </article>
 </main>
 

@@ -11,11 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
+
+
 
     @Autowired
     private PostService postService;
@@ -32,33 +35,45 @@ public class HomeController {
         List<Post> latest3Posts = latest5Posts.stream()
                 .limit(3).collect(Collectors.toList());
         model.addAttribute("latest3posts", latest3Posts);
+        model.addAttribute("page", 0);
         return "index";
 
     }
 
-    @RequestMapping("/viewAllPosts")
-    public String viewAll(Model model) {
-        List<Post> allPosts = postService.findAll();
-        model.addAttribute("allposts", allPosts);
+    // @RequestMapping("/share/viewAllPosts")
+    // public String viewAll(Model model) {
+    //    List<Post> allPosts = postService.findAll();
+    //    model.addAttribute("allposts", allPosts);
+    //   model.addAttribute("page", 0);
+    //   return "/share/viewAllPosts";
+    //}
 
-        return "/share/viewAllPosts";
-
-    }
-
-    @RequestMapping("/viewNext")
-    public String viewNext(Model model) {
-        List<Post> allPosts = postService.findAll();
-        int page = 1;
-       if(allPosts.size()/5 < page) {
+    @RequestMapping("/share/viewNext/{page}")
+    public String viewNext(@PathVariable("page") Integer page,Model model) {
+       List<Post> allPosts = postService.findAll();
+       if( allPosts.size()/5 > page) {
            page += 1;
        } else { page = 0;}
 
         List<Post> nextPosts = postService.findNext5(page,5);
-        model.addAttribute("allposts", nextPosts);
+        for (Post post: nextPosts) {
+            post.setBody(cutLongTextDouble(post.getBody()));
+        }
+        model.addAttribute("nextposts", nextPosts);
 
         model.addAttribute("page", page);
         return "/share/viewAllPosts";
 
+    }
+
+    private String cutLongTextDouble(String text)
+    {
+        int maxSize = 400;
+        String cutedText = text.substring(0, Math.min(text.length(),maxSize));
+        if (text.length() > maxSize) {
+            text = cutedText + "  ...";
+        }
+        return text;
     }
 
 
@@ -77,6 +92,7 @@ public class HomeController {
         List<Comment> comments = commentService.findAllByPostId(id);
         model.addAttribute("comments", comments);
         model.addAttribute("post", post);
+        model.addAttribute("page", 1);
         return "/share/viewPost";
     }
 
