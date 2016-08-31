@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="layout :: site-head">
+    <title>MVC Blog - All Post</title>
+</head>
+
+<body>
+<header th:replace="layout :: site-header" />
+
+<main id="comments">
+    <h2>All Posts:</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Content</th>
+            <th>Author ID</th>
+            <th>Author</th>
+            <th>Post ID</th>
+            <th>Post</th>
+            <th>Date</th>
+            <th>Action</th>
+
+        </tr>
+
+        <tr  th:each="c : ${comments}">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.content}"></td>
+            <td th:text="${c.author.id}"></td>
+            <td th:text="${c.author.username}"></td>
+            <td th:text="${c.post.id}"></td>
+            <td th:text="${c.post.title}"></td>
+
+            <td th:text="${#dates.format(c.date, 'dd-MM-yyyy')}"></td>
+            <td>
+                  <span th:if="${#httpServletRequest.remoteUser == 'admin' }">
+
+                        <a href="#" th:href="@{/comments/delete/{id}/(id=${c.id})}">Delete</a>
+                </span>
+            </td>
+        </tr>
+
+    </table>
+
+</main>
+
+<footer th:replace="layout :: site-footer" />
+</body>
+
+
+</html>

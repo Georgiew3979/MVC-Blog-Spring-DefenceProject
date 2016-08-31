@@ -28,6 +28,8 @@
                 <a href="posts/index.html" th:href="@{/posts}">Posts</a>
                  <span th:if="${#httpServletRequest.remoteUser == 'admin'}">
                     <a href="users/login.html" th:href="@{/users}">Users</a>
+                       <a href="users/login.html" th:href="@{/comments}">Comments</a>
+
                  </span>
             </span>
 

@@ -31,4 +31,9 @@ public class CommentServiceJpaImpl implements CommentService {
     public void deleteById(Long id) {
         this.commentRepository.delete(id);
     }
+
+    @Override
+    public List<Comment> findAll() {
+        return this.commentRepository.findAll();
+    }
 }
