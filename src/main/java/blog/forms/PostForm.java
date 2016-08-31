@@ -1,10 +1,12 @@
 package blog.forms;
 
+import blog.models.Tag;
 import blog.models.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 
 public class PostForm {
@@ -25,6 +27,16 @@ public class PostForm {
     private String dateNew;
 
     private Date date =  new Date();
+
+    private List<Tag> tags;
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
 
     public String getDateNew() {
         return dateNew;

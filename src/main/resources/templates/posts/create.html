@@ -26,11 +26,20 @@
             <td>Content</td>
             <td><textarea cols="50" rows="15"  id="body" name="body" th:value="*{body}"></textarea></td>
         </tr>
+        <tr>
+            <td>Tags</td>
+            <td><select name="tags" multiple="multiple" >
+                <option th:each="t : ${tags}" th:value="${{t.id}}"  th:text="${{t.name}}">Volvo</option>
+                </select>
+                Hold down the Ctrl button to select multiple options.
+            </td>
+        </tr>
+
 
         <tr>
             <td>Author</td>
             <td><input type="text"  name="authorName"  disabled="disabled" th:value="${#httpServletRequest.remoteUser}"  /></td>
-            <td><input type="hidden"  name="authorName" id="authorName" th:value="${#httpServletRequest.remoteUser}"  /></td>
+            <input type="hidden"  name="authorName" id="authorName" th:value="${#httpServletRequest.remoteUser}"  />
         </tr>
         <tr>
             <td>Date</td>

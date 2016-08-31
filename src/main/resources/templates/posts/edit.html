@@ -33,6 +33,21 @@
 
         </tr>
         <tr>
+            <td>Tags active for post</td>
+            <td><select name="tags_old" multiple="multiple" disabled="disabled">
+                <option th:each="to : ${tags_old}" th:value="${{to.id}}"  th:text="${{to.name}}">Volvo</option>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td>New Tags</td>
+            <td><select name="tags" multiple="multiple" >
+                <option th:each="t : ${tags}" th:value="${{t.id}}"  th:text="${{t.name}}">Volvo</option>
+            </select>
+                Hold down the Ctrl button to select multiple options.
+            </td>
+        </tr>
+        <tr>
         <td colspan="2" align="center">Author</td>
         </tr>
         <tr>

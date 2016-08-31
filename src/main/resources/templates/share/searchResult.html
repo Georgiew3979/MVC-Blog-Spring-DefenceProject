@@ -8,14 +8,13 @@
 <header th:replace="layout :: site-header" />
 
 <aside>
-    <h2>Current Posts</h2>
-    <a href="#" th:each="p : ${nextposts}" th:text="${p.title}"
-       th:href="@{/share/{id}/(id=${p.id})}">Work Begins on HTML5.1</a>
+    <h2>Searched Posts</h2>
+    <a href="#" th:each="r : ${resultByPost}" th:text="${r.title}"
+       th:href="@{/share/{id}/(id=${r.id})}">Work Begins on HTML5.1</a>
     <br/>
     <hr/>
     <a href="#" th:href="@{/share/viewNext/{page}/(page=${page})}">Show next 5 posts</a><br/>
     <hr/>
-
 
     <h2>Search by name</h2>
     <a href="#" th:each="t : ${tags}" th:text="${t.name}"
@@ -27,18 +26,18 @@
 
 
 
-    <article th:each="p : ${nextposts}">
-        <h2 class="title" th:text="${p.title}">Post Title</h2>
+    <article th:each="r : ${resultByPost}">
+        <h2 class="title" th:text="${r.title}">Post Title</h2>
         <div class="date">
             <i>Posted on</i>
-            <span th:text="${#dates.format(p.date, 'dd-MM-yyyy')}">22-May-2016</span>
-            <span th:if="${p.author}" th:remove="tag">
-                    <i>by</i> <span th:text="${p.author.fullName != null ?
-                        p.author.fullName : p.author.username}">Svetlin Nakov</span>
+            <span th:text="${#dates.format(r.date, 'dd-MM-yyyy')}">22-May-2016</span>
+            <span th:if="${r.author}" th:remove="tag">
+                    <i>by</i> <span th:text="${r.author.fullName != null ?
+                        r.author.fullName : r.author.username}">Svetlin Nakov</span>
                 </span>
         </div>
-        <p class="content" th:utext="${p.body}">Post content</p>
-        <a href="#" th:href="@{/share/{id}/(id=${p.id})}">See more ...</a>
+        <p class="content" th:utext="${r.body}"></p>
+        <a href="#" th:href="@{/share/{id}/(id=${r.id})}">See more ...</a>
     </article>
 </main>
 

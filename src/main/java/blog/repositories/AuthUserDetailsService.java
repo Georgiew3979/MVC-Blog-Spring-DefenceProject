@@ -15,6 +15,7 @@ import java.util.List;
 
 @Repository
 public class AuthUserDetailsService implements UserDetailsService {
+    public boolean isAuthorize = false;
 
     @Autowired
     private UserService users;
@@ -49,6 +50,7 @@ public class AuthUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
         if (role.intValue() == 1) {
             authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            setAuthorize(true);
         } else if (role.intValue() == 2) {
             authList.add(new SimpleGrantedAuthority("ROLE_USER"));
         } else if (role.intValue() == 0) {
@@ -64,5 +66,13 @@ public class AuthUserDetailsService implements UserDetailsService {
 
 
         return user;
+    }
+
+    public boolean isAuthorize() {
+        return isAuthorize;
+    }
+
+    protected void setAuthorize(boolean authorize) {
+        isAuthorize = authorize;
     }
 }

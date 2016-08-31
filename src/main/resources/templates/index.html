@@ -17,7 +17,8 @@
     <hr/>
 
     <h2>Search by name</h2>
-<p>TODO</p>
+    <a href="#" th:each="t : ${tags}" th:text="${t.name}"
+       th:href="@{/share/search/{tag}/(tag=${t.id})}">Work Begins on HTML5.1</a>
 </aside>
 
 <main id="posts">

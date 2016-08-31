@@ -2,9 +2,11 @@ package blog.controllers;
 
 import blog.models.Comment;
 import blog.models.Post;
+import blog.models.Tag;
 import blog.services.CommentService;
 import blog.services.NotificationService;
 import blog.services.PostService;
+import blog.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +26,8 @@ public class HomeController {
     private PostService postService;
     @Autowired
     private CommentService commentService;
-
+    @Autowired
+    private TagService tagService;
     @Autowired
     private NotificationService notificationService;
 
@@ -34,7 +37,9 @@ public class HomeController {
         model.addAttribute("latest5posts", latest5Posts);
         List<Post> latest3Posts = latest5Posts.stream()
                 .limit(3).collect(Collectors.toList());
+        List<Tag> tags = tagService.findAll();
         model.addAttribute("latest3posts", latest3Posts);
+        model.addAttribute("tags", tags);
         model.addAttribute("page", 0);
         return "index";
 
@@ -60,7 +65,8 @@ public class HomeController {
             post.setBody(cutLongTextDouble(post.getBody()));
         }
         model.addAttribute("nextposts", nextPosts);
-
+        List<Tag> tags = tagService.findAll();
+        model.addAttribute("tags", tags);
         model.addAttribute("page", CURRENT_PAGE);
         return "/share/viewAllPosts";
 
@@ -73,7 +79,8 @@ public class HomeController {
         for (Post post: nextPosts) {
             post.setBody(cutLongTextDouble(post.getBody()));
         }
-
+        List<Tag> tags = tagService.findAll();
+        model.addAttribute("tags", tags);
 
         model.addAttribute("nextposts", nextPosts);
         model.addAttribute("page", CURRENT_PAGE);

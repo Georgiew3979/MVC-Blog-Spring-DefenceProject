@@ -5,6 +5,7 @@ import blog.forms.RegisterForm;
 import blog.models.Comment;
 import blog.models.Post;
 import blog.models.User;
+import blog.repositories.AuthUserDetailsService;
 import blog.repositories.UserRepository;
 import blog.services.CommentService;
 import blog.services.NotificationService;
@@ -26,6 +27,8 @@ import java.util.List;
 @Controller
 public class AccountController {
 
+
+
     @Autowired
     public NotificationService notificationService;
 
@@ -37,9 +40,15 @@ public class AccountController {
 
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private AuthUserDetailsService authUserDetailsService;
 
     @RequestMapping("/users")
     public String viewAllUsers(Model model) {
+        if(!authUserDetailsService.isAuthorize()){
+            notificationService.addAlertMessage("There is not allowed to be here");
+            return "redirect:/";
+        }
         List<User> users = userService.findAll();
         if(users == null) {
             notificationService.addErrorMessage("Cannot find any user");
@@ -133,6 +142,10 @@ public class AccountController {
 
     @RequestMapping(value = "/users/delete/{id}", method = RequestMethod.POST)
     public String deleteUserById(@PathVariable("id") Long id) {
+        if(!authUserDetailsService.isAuthorize()){
+            notificationService.addAlertMessage("There is not allowed to be here");
+            return "redirect:/";
+        }
         User user = userService.findById(id);
         if(user == null) {
             notificationService.addErrorMessage("Cannot find  user:" + id);
@@ -180,6 +193,10 @@ public class AccountController {
 
     @RequestMapping(value = "/users/edit/{id}", method = RequestMethod.POST)
     public String edituser(@PathVariable("id") Long id, @Valid RegisterForm registerForm, BindingResult bindingResult) {
+        if(!authUserDetailsService.isAuthorize()){
+            notificationService.addAlertMessage("There is not allowed to be here");
+            return "redirect:/";
+        }
         if (bindingResult.hasErrors()) {
             notificationService.addErrorMessage("Please fill all fields");
             return "users/edit";
